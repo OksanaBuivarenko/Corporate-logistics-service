@@ -1,0 +1,27 @@
+package com.micro.gateway.config;
+
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.reactive.function.client.WebClient;
+
+@EnableWebFluxSecurity
+@Configuration
+public class WebClientConfig {
+
+    @Bean
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+        http.csrf(ServerHttpSecurity.CsrfSpec::disable);
+        return http.build();
+    }
+
+    @Bean
+    @LoadBalanced
+    WebClient webClient() {
+        return WebClient.builder()
+                .build();
+    }
+}

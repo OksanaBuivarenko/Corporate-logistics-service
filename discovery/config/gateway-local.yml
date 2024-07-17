@@ -1,0 +1,97 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: authentication
+          uri: lb://authentication
+          predicates:
+            - Path=/auth/api/**
+          filters:
+            - RewritePath=/auth(?<segment>/?.*)", "$\\{segment}
+        - id: authentication-api
+          uri: lb://authentication
+          predicates:
+            - Path=/authentication/v3/**
+          filters:
+            - RewritePath=/auth(?<segment>/?.*)", "$\\{segment}
+
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order-service/api/**
+          filters:
+            - RewritePath=/order-service(?<segment>/?.*)", "$\\{segment}
+            - AuthFilter
+        - id: order-service-api
+          uri: lb://order-service
+          predicates:
+            - Path=/order-service/v3/**
+          filters:
+            - RewritePath=/order-service(?<segment>/?.*)", "$\\{segment}
+
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/payment-service/api/**
+          filters:
+            - RewritePath=/payment-service(?<segment>/?.*)", "$\\{segment}
+            - AuthFilter
+        - id: payment-service-api
+          uri: lb://payment-service
+          predicates:
+            - Path=/payment-service/v3/**
+          filters:
+            - RewritePath=/payment-service(?<segment>/?.*)", "$\\{segment}
+
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+            - Path=/inventory-service/api/**
+          filters:
+            - RewritePath=/inventory-service(?<segment>/?.*)", "$\\{segment}
+            - AuthFilter
+        - id: inventory-service-api
+          uri: lb://inventory-service
+          predicates:
+            - Path=/inventory-service/v3/**
+          filters:
+            - RewritePath=/inventory-service(?<segment>/?.*)", "$\\{segment}
+
+        - id: delivery-service
+          uri: lb://delivery-service
+          predicates:
+            - Path=/delivery-service/api/**
+          filters:
+            - RewritePath=/delivery-service(?<segment>/?.*)", "$\\{segment}
+            - AuthFilter
+        - id: delivery-service-api
+          uri: lb://delivery-service
+          predicates:
+            - Path=/delivery-service/v3/**
+          filters:
+            - RewritePath=/delivery-service(?<segment>/?.*)", "$\\{segment}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /order-service/v3/api-docs
+        name: order-service
+      - url: /authentication/v3/api-docs
+        name: authentication
+      - url: /payment-service/v3/api-docs
+        name: payment-service
+      - url: /inventory-service/v3/api-docs
+        name: inventory-service
+      - url: /delivery-service/v3/api-docs
+        name: delivery-service
+
+    discovery:
+      locator:
+        lower-case-service-id: true
+
