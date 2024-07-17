@@ -57,9 +57,9 @@ Corporate logistics service — это  системf автоматизации
    
 2. Загрузите проект-заготовку из Git-репозитория.
 
-3. Запустите базу данных Postgres и Apache Kafka в [Docker](https://www.docker.com/products/docker-desktop/), выполнив команду в терминале docker compose up.
+3. Запустите базу данных Postgres и Apache Kafka в [Docker](https://www.docker.com/products/docker-desktop/), выполнив команду в терминале `docker compose up`.
 
-4. Загрузите starter  с общими зависимостями в локальный репозиторий при помощи команды mvn install.
+4. Загрузите Starter  с общими зависимостями в локальный репозиторий при помощи команды `mvn install`.
 
 5. Запустите сервис внешних настроек и сервисов обнаружения - Discovery.
 
